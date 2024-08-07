@@ -1,23 +1,24 @@
-import logo from './logo.svg';
 import './App.css';
+import ToggleThemeButtom from './components/ToggleThemeButton';
+import {useLocalStorege} from './hooks/useLocalStorage'
+import {useDetectDevice} from './hooks/useDetectDevice'
+import {useWindowResize} from './hooks/useWindowResize'
 
 function App() {
+  const[lightMode,setLigthMode]=useLocalStorege("mode",true);
+  const{width}=useWindowResize();
+  const device = useDetectDevice()
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+    className='container'
+    style={{
+      backgroundColor:`${width>576 && !lightMode ? "blue": "green"}`,
+
+    }}>
+   <div>
+    <h1>{device}</h1>
+   </div>
+   <ToggleThemeButtom setLightMode={setLigthMode}/>
     </div>
   );
 }
